@@ -1,3 +1,4 @@
+/*
 var fon = document.getElementById('wrapper');
 var canvas = document.querySelector('canvas');
 var deg = Math.PI / 180;
@@ -89,3 +90,4 @@ function createGrass(context, width, height) {
   }
 
 }
+*/
