@@ -1,0 +1,8 @@
+game.woodcutter = {
+  create() {
+
+  },
+  render() {
+
+  },
+}
