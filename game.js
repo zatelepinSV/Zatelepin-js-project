@@ -19,6 +19,9 @@ const game = {
     woodcutter: null,
     tree: null,
   },
+  sprites: {
+    background: null,
+  },
   start() {
     this.init();
 
