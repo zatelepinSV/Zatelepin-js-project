@@ -1,8 +1,11 @@
 game.board = {
+  game: game,
+  rr: 500,
 
   create(context, width, height) {
-    this.createForest(context, width, height);
-    this.createField(context,  width, height);
+    // this.createForest(context, width, height);
+    // this.createField(context,  width, height);
+    this.createBackground()
   },
   render() {
 
@@ -36,5 +39,9 @@ game.board = {
     context.fillStyle = '#54C867';
     context.fillRect(0, height - (height / 100 * 10), width, height);
     context.closePath();
+  },
+
+  createBackground() {
+    this.game.ctx.drawImage(this.game.sprites.background,0,0, this.game.width, this.game.height);
   }
 }
