@@ -1,10 +1,9 @@
 game.tree = {
   game: game,
   size: 10,
-  cells: [],
   mass: [],
   treeWidth: 2 - 25,
-  treeHeight: 100 * 10,
+  treeHeight: game.height / 100 * 10,
   posX: 0,
   posY: 0,
   y: 0,
@@ -13,12 +12,21 @@ game.tree = {
   ref: true,
 
   create() {
-    this.createTreeTrue();
+    this.createTree();
   },
 
   createMass() {
     for (var t = 0; t <= 600; t += 100) {
-      this.mass.push(this.func(t))
+      this.mass.push(this.func(t));
+      //console.log(this.mass)
+      //console.log(this.game.height / this.treeHeight)                !!!!разобраться
+    }
+    this.correctPositionLastBranch();
+  },
+
+  correctPositionLastBranch() {
+    if (this.mass[this.mass.length-1].randBranch === 1 || this.mass[this.mass.length-1].randBranch === 4) {
+      return this.mass[this.mass.length-1].randBranch = 0;
     }
   },
 
@@ -36,7 +44,7 @@ game.tree = {
     return Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
   },
 
-  createTreeTrue() {
+  createTree() {
     this.mass.forEach((mass, currentValue) => {
       this.game.ctx.beginPath();
       this.game.ctx.fillStyle = '#854C1F';
@@ -70,10 +78,10 @@ game.tree = {
 }
 
 document.addEventListener('keydown', (event) => {
-  if (event.code === 'ShiftLeft' || event.code === 'ControlLeft') {
+  if (event.code === 'ShiftLeft' || event.code === 'ControlLeft' || event.code === 'ArrowLeft'|| event.code === 'ArrowRight') {
     game.tree.mass.pop();
     game.tree.updateMass();
     game.tree.mass.unshift(game.tree.func(0));
-    console.log(game.tree.mass[6])
+    //console.log(game.tree.mass[6]);
   }
 })

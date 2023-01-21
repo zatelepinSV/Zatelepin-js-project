@@ -2,7 +2,7 @@ game.board = {
   game: game,
   rr: 500,
 
-  create(context, width, height) {
+  create() {
     this.createBackground();
   },
 

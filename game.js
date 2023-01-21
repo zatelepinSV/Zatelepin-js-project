@@ -37,6 +37,7 @@ const game = {
     this.ctx = this.canvas.getContext('2d');
     this.initDim();
     this.tree.createMass();
+    this.woodcutter.init();
   },
 
   preload(callback) {
@@ -67,8 +68,11 @@ const game = {
   },
 
   create() {
-    this.board.create(this.ctx, this.canvas.width, this.canvas.height);
-    this.tree.create(this.ctx, this.canvas.width, this.canvas.height);
+    this.board.create();
+    this.tree.create();
+    this.woodcutter.create();
+    this.score.createScore();
+    //this.woodcutter.createImage();
   },
 
   update() {
