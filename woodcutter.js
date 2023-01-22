@@ -27,14 +27,14 @@ window.document.addEventListener('keydown', (event) => {
   if (event.code === 'ShiftLeft' || event.code === 'ArrowLeft') {
     game.woodcutter.posX = game.canvas.width / 2 - 150;
     game.woodcutter.some = true;
-    game.score.score += 10;
+    game.score += 10;
     game.woodcutter.render();
 
   }
   if (event.code === 'ControlLeft' || event.code === 'ArrowRight') {
     game.woodcutter.posX = game.canvas.width / 2 + 50;
     game.woodcutter.some = false;
-    game.score.score += 10;
+    game.score += 10;
     game.woodcutter.render();
   }
 })

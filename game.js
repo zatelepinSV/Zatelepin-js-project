@@ -22,7 +22,8 @@ const game = {
   sprites: {
     woodcutter: null,
     background: null,
-    branch: null,
+    branchLeft: null,
+    branchRight: null,
   },
 
   start() {
@@ -71,7 +72,7 @@ const game = {
     this.board.create();
     this.tree.create();
     this.woodcutter.create();
-    this.score.createScore();
+    //this.score.createScore();
     //this.woodcutter.createImage();
   },
 

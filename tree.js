@@ -46,16 +46,18 @@ game.tree = {
 
   createTree() {
     this.mass.forEach((mass, currentValue) => {
+
+      if (mass.randBranch === 1 && currentValue < 6) {
+        this.game.ctx.drawImage(this.game.sprites.branchRight, mass.x, mass.y, 200, 100);
+      } else if (mass.randBranch === 3 && currentValue < 6) {
+        this.game.ctx.drawImage(this.game.sprites.branchLeft, mass.x - 150, mass.y, 200, 100);
+      }
       this.game.ctx.beginPath();
       this.game.ctx.fillStyle = '#854C1F';
       this.game.ctx.strokeStyle = 'brown';
       this.game.ctx.fillRect(mass.x, mass.y, mass.width, mass.height);
       this.game.ctx.closePath();
-      if (mass.randBranch === 1 && currentValue < 6) {
-        this.game.ctx.drawImage(this.game.sprites.branch, mass.x, mass.y, 200, 100);
-      } else if (mass.randBranch === 3 && currentValue < 6) {
-        this.game.ctx.drawImage(this.game.sprites.branch, mass.x - 150, mass.y, 200, 100);
-      }
+
     })
   },
 
