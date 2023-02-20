@@ -10,7 +10,7 @@ export class AjaxStringStorage {
     });
   }
 
-  storageHost = "http://fe.it-academy.by/AjaxStringStorage2.php";
+  storageHost = "https://fe.it-academy.by/AjaxStringStorage2.php";
 
   preloadData(f,v) {
     const pass = 1;
