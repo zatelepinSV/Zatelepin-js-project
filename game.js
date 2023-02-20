@@ -1,49 +1,74 @@
-const game = {
-  canvas: null,
-  ctx: null,
-  width: 0,
-  height: 0,
-  score: 0,
-  dimensions: {
-    max: {
-      width: 1024,
-      height: 768,
-    },
-    min: {
-      width: 300,
-      height: 300,
-    },
-  },
-  elements: {
-    background: null,
-    woodcutter: null,
-    tree: null,
-  },
-  sprites: {
-    woodcutter: null,
-    background: null,
-    branchLeft: null,
-    branchRight: null,
-  },
+import {Board} from "./board.js";
+import {Tree} from "./tree.js";
+import {Woodcutter} from "./woodcutter.js";
+import {Strip} from "./strip.js";
+import {LooseMenu} from "./looseMenu.js";
+
+
+export class Game {
+  constructor(score) {
+    this.ressult = score;
+    this.mp3 = new Audio('audio/hit.mp3');
+    this.game = {
+      speed: 1000,
+      canvas: null,
+      ctx: null,
+      width: 0,
+      height: 0,
+      score: 0,
+      dimensions: {
+        max: {
+          width: 1024,
+          height: 768,
+        },
+        min: {
+          width: 300,
+          height: 300,
+        },
+      },
+      elements: {
+        background: null,
+        woodcutter: null,
+        tree: null,
+      },
+      sprites: {
+        woodcutter: null,
+        background: null,
+        branchLeft: null,
+        branchRight: null,
+      },
+    }
+    this.start();
+  }
 
   start() {
     this.init();
+    //this.run();
     this.preload(() => {
       this.run();
     });
-  },
+  }
 
   init() {
-    this.canvas = document.getElementById('canva');
-    this.ctx = this.canvas.getContext('2d');
+    const appEl = document.getElementById('app');
+    const canvas = document.createElement('canvas');
+    canvas.id = 'canva';
+    appEl.replaceChildren(canvas)
+    this.game.canvas = document.getElementById('canva');
+    this.game.ctx = this.game.canvas.getContext('2d');
     this.initDim();
-    this.tree.createMass();
-    this.woodcutter.init();
-  },
+  }
+
+  initDim() {
+    this.game.width = window.innerWidth;
+    this.game.height = window.innerHeight;
+    this.game.canvas.width = this.game.width;
+    this.game.canvas.height = this.game.height;
+  }
 
   preload(callback) {
     let loaded = 0;
-    const required = Object.keys(this.sprites).length;
+    const required = Object.keys(this.game.sprites).length;
     const onAssetLoad = () => {
       ++loaded;
       if (loaded >= required) {
@@ -51,66 +76,91 @@ const game = {
       }
     }
     this.preloadSprites(onAssetLoad);
-  },
+  }
 
   preloadSprites(onAssetLoadCallback) {
-    for (let key in this.sprites) {
-      this.sprites[key] = new Image;
-      this.sprites[key].src = 'image/' + key + '.png';
-      this.sprites[key].addEventListener('load', onAssetLoadCallback);
+    for (let key in this.game.sprites) {
+      this.game.sprites[key] = new Image;
+      this.game.sprites[key].src = 'image/' + key + '.png';
+      this.game.sprites[key].addEventListener('load', onAssetLoadCallback);
     }
-  },
+  }
 
   run() {
     this.create();
     this.gameInterval = setInterval(() => {
       this.update();
-    }, 1000);
-  },
+    }, 100);
+  }
 
   create() {
-    this.board.create();
-    this.tree.create();
-    this.woodcutter.create();
-    //this.score.createScore();
-    //this.woodcutter.createImage();
-  },
+    this.board = new Board(this.game);
+    this.tree = new Tree(this.game);
+    this.woodcutter = new Woodcutter(this.game);
+    this.strip = new Strip(this.game);
+
+    this.dd = () => {
+      if (event.code === 'ArrowLeft') {
+        this.woodcutter.positionWoodLeft();
+      }
+      if (event.code === 'ArrowRight') {
+        this.woodcutter.positionWoodRight();
+      }
+      this.render();
+    }
+    document.addEventListener('keydown', this.dd)
+
+  }
 
   update() {
-    this.render();
+    //this.render();
     this.loose();
-  },
+  }
 
   render() {
-    //обновление канвас
-  },
-
-  stop() {
-    clearInterval(this.gameInterval);
-  },
-
-  initDim() {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
-  },
+    this.game.score += 10;
+    this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+    this.board.createBoard(this.game)
+    this.tree.renderMass(this.mp3);
+    this.woodcutter.createWoodcutter();
+  }
 
   loose() {
-    if (game.tree.mass[6].randBranch === 1 && !game.woodcutter.some) {
-      console.log(game.tree.mass[6].randBranch);
-      console.log(game.woodcutter.some);
-      console.log('loose');
-      alert('loooooose')
+    if (this.checkTime() === 0 || this.checkBranch()) {
+      //alert('you looose')
       this.stop();
-    } else if (game.tree.mass[6].randBranch === 3 && game.woodcutter.some) {
-      console.log('loose');
-      alert('loooooose')
-      this.stop();
-    }
-  },
-};
 
-window.addEventListener("load", () => {
-  game.start();
-})
+      //location.hash = encodeURIComponent(JSON.stringify({page: "looseMenu"}))
+      this.looseMenu = new LooseMenu(this.game.score,this.ressult);
+    }
+  }
+
+  checkTime () {
+    return this.strip.object.time;
+  }
+
+  checkBranch() {
+    if (this.tree.tree.mass[6].randBranch === 1 && !this.woodcutter.wood.some) {
+      return true
+    } else if (this.tree.tree.mass[6].randBranch === 3 && this.woodcutter.wood.some) {
+      return true
+    }
+  }
+
+  stop() {
+    document.removeEventListener('keydown',this.strip.lisAddTime)
+    document.removeEventListener('keydown',this.dd)
+    clearInterval(this.gameInterval);
+    clearInterval(this.strip.inter);
+    /*const highestTimeoutId = setTimeout('');
+    for (let k = 0 ; k < highestTimeoutId ; k++) {
+      clearTimeout(k);
+    }*/
+  }
+
+  clear() {
+
+  }
+
+
+}

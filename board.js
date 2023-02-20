@@ -1,24 +1,25 @@
-game.board = {
-  game: game,
-  rr: 500,
+//import {Game} from "./Game.js";
 
-  create() {
+export class Board {
+  constructor(obj) {
+
+    this.self = obj;
+    this.createBoard()
+  }
+
+  createBoard() {
     this.createBackground();
     this.createScore();
-  },
-
-  render() {
-
-  },
+  }
 
   createBackground() {
-    this.game.ctx.drawImage(this.game.sprites.background,0,0, this.game.width, this.game.height);
-  },
+    this.self.ctx.drawImage(this.self.sprites.background, 0, 0, this.self.width, this.self.height);
+  }
 
   createScore() {
-    this.game.ctx.fillStyle='red';
-    this.game.ctx.font='italic bold 28px Courier';
-    this.game.ctx.fillText('Score: ' + this.game.score,10,30);
-  },
+    this.self.ctx.fillStyle = 'red';
+    this.self.ctx.font = 'italic bold 28px Courier';
+    this.self.ctx.fillText('Score: ' + this.self.score, 10, 30);
+  }
 
 }
