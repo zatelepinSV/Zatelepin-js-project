@@ -46,7 +46,7 @@ export class Game {
     this.init();
     this.waitWindow();
     this.preload(() => {
-      this.remooveWaitMess();
+      this.removeWaitMess();
       this.run();
     });
   }
@@ -57,7 +57,7 @@ export class Game {
     wind.innerHTML = `Loading... Please Wait`;
     appEl.appendChild(wind)
   }
-remooveWaitMess() {
+removeWaitMess() {
   document.getElementById('wait').remove();
 }
 
@@ -114,18 +114,19 @@ remooveWaitMess() {
     this.dd = () => {
       if (event.code === 'ArrowLeft') {
         this.woodcutter.positionWoodLeft();
+        this.render();
       }
       if (event.code === 'ArrowRight') {
         this.woodcutter.positionWoodRight();
+        this.render();
       }
-      this.render();
+
     }
     document.addEventListener('keydown', this.dd)
 
   }
 
   update() {
-    //this.render();
     this.loose();
   }
 

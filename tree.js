@@ -1,4 +1,3 @@
-//import {Game} from "./Game.js";
 
 export class Tree {
   constructor(options) {
@@ -18,7 +17,6 @@ export class Tree {
       ref: true,
     }
     this.createTre();
-    //this.woodcutter = new Woodcutter(obj);
   }
 
 

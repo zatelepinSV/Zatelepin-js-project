@@ -36,6 +36,9 @@ export class Spa {
       case 'score':
         this.renderScorePage();
         break;
+      case 'settings':
+        this.renderSettingsPage();
+        break;
       default:
         this.renderMainPage();
     }
@@ -48,12 +51,12 @@ export class Spa {
 
   renderMainPage() {
 
-    const html = `<h1>Welcome!!!</h1>
+    const html = `<h1>The woodcutter</h1>
                     <ul>
                         <li id="newGame">New Game</li>
                         <li id="rules">Rules</li>
                         <li id="score">Score</li>
-                        <li>...</li>
+                        <li id="settings">settings</li>
                     </ul>`;
     Helper.createPage(this.hookId,"rules", html,false);
     Array.from(document.getElementsByTagName('li')).map(item => {
@@ -69,7 +72,8 @@ export class Spa {
   }
 
   renderScorePage() {
-    let result = `<ul id="result">`
+    let result = `<h1>Score</h1>
+                  <ul id="result">`
     result += this.#articles.sort((a,b) => a.id - b.id).map(item =>
       `<li><span>
       ${item.name} : ${item.id}</span>
@@ -77,6 +81,17 @@ export class Spa {
     result += `</ul>`;
 
     Helper.createPage(this.hookId,"score", result,true);
+  }
+
+  renderSettingsPage() {
+    const key = `<h1>Settings</h1>
+                 <p>some settings</p>
+                 <div>
+                 <input type="checkbox" id="sound" name="sound" checked>
+                 <label for="sound">Sound</label>
+                 </div>`;
+
+    Helper.createPage(this.hookId,"rules", key,true);
   }
 
   goToPage() {

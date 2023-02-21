@@ -34,7 +34,7 @@ export class Strip {
       this.object.time--;
     }, time)
     this.lisAddTime = () => {
-      if (event.code === 'ArrowLeft') {
+      if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
         this.object.time += this.object.upTime;
       }
     }
