@@ -42,12 +42,17 @@ export class Game {
   }
 
   start() {
+    this.waitWindow();
     this.init();
-    //this.run();
     this.preload(() => {
       this.run();
     });
   }
+  waitWindow() {
+    const appEl = document.getElementById('app');
+    appEl.innerHTML = `Loading...`;
+  }
+
 
   init() {
     const appEl = document.getElementById('app');
@@ -127,10 +132,7 @@ export class Game {
 
   loose() {
     if (this.checkTime() === 0 || this.checkBranch()) {
-      //alert('you looose')
       this.stop();
-
-      //location.hash = encodeURIComponent(JSON.stringify({page: "looseMenu"}))
       this.looseMenu = new LooseMenu(this.game.score,this.ressult);
     }
   }
@@ -152,10 +154,6 @@ export class Game {
     document.removeEventListener('keydown',this.dd)
     clearInterval(this.gameInterval);
     clearInterval(this.strip.inter);
-    /*const highestTimeoutId = setTimeout('');
-    for (let k = 0 ; k < highestTimeoutId ; k++) {
-      clearTimeout(k);
-    }*/
   }
 
   clear() {
