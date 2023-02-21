@@ -42,17 +42,24 @@ export class Game {
   }
 
   start() {
-    this.waitWindow();
+
     this.init();
+    this.waitWindow();
     this.preload(() => {
+      this.remooveWaitMess();
       this.run();
     });
   }
   waitWindow() {
     const appEl = document.getElementById('app');
-    appEl.innerHTML = `Loading...`;
+    let wind = document.createElement('div');
+    wind.id = 'wait';
+    wind.innerHTML = `Loading... Please Wait`;
+    appEl.appendChild(wind)
   }
-
+remooveWaitMess() {
+  document.getElementById('wait').remove();
+}
 
   init() {
     const appEl = document.getElementById('app');
