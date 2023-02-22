@@ -3,6 +3,8 @@ import {Tree} from "./tree.js";
 import {Woodcutter} from "./woodcutter.js";
 import {Strip} from "./strip.js";
 import {LooseMenu} from "./looseMenu.js";
+import {DOMHelper} from "./helper.js";
+
 
 
 export class Game {
@@ -42,24 +44,13 @@ export class Game {
   }
 
   start() {
-
     this.init();
-    this.waitWindow();
+    DOMHelper.createLoader();
     this.preload(() => {
-      this.removeWaitMess();
+      DOMHelper.removeLoader();
       this.run();
     });
   }
-  waitWindow() {
-    const appEl = document.getElementById('app');
-    let wind = document.createElement('div');
-    wind.id = 'wait';
-    wind.innerHTML = `Loading... Please Wait`;
-    appEl.appendChild(wind)
-  }
-removeWaitMess() {
-  document.getElementById('wait').remove();
-}
 
   init() {
     const appEl = document.getElementById('app');
@@ -120,10 +111,8 @@ removeWaitMess() {
         this.woodcutter.positionWoodRight();
         this.render();
       }
-
     }
     document.addEventListener('keydown', this.dd)
-
   }
 
   update() {
@@ -163,10 +152,4 @@ removeWaitMess() {
     clearInterval(this.gameInterval);
     clearInterval(this.strip.inter);
   }
-
-  clear() {
-
-  }
-
-
 }

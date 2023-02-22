@@ -13,7 +13,7 @@ export class Board {
   }
 
   createBackground() {
-    this.self.ctx.drawImage(this.self.sprites.background, 0, 0, this.self.width, this.self.height);
+    this.self.ctx.drawImage(this.self.sprites.background, 0, 0,this.self.width, this.self.height);
   }
 
   createScore() {

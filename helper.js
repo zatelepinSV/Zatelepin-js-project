@@ -1,14 +1,13 @@
 export class Helper {
-  static createPage(hookId, className,text,value, loose) {
+  static createPage(hookId, className,text,value) {
     const appEl = document.getElementById(hookId);
     const pageWrapper = document.createElement('div');
     pageWrapper.id = 'wrapper';
     pageWrapper.className = className;
     pageWrapper.innerHTML = text;
     if (value) {
-      const btnBack = document.createElement('button');
+      const btnBack = document.createElement('div');
       btnBack.id = 'back';
-      btnBack.type = "button";
       btnBack.innerText = 'BACK';
       btnBack.addEventListener("click", () => {
         location.hash = encodeURIComponent('');
@@ -17,5 +16,33 @@ export class Helper {
     }
     return appEl.replaceChildren(pageWrapper);
   }
+
+}
+
+export class DOMHelper {
+  static createLoader() {
+    const appEl = document.getElementById('app');
+    let wind = document.createElement('div');
+    wind.id = 'wait';
+    wind.innerHTML = `Loading... Please Wait`;
+    appEl.appendChild(wind)
+  }
+
+  static removeLoader() {
+    document.getElementById('wait').remove();
+  }
+
+}
+
+export class SettingsMenuHelper {
+  static object = {
+    audio: null,
+    complication: {
+      easy: null,
+      norm: null,
+      hard: null,
+    }
+  }
+
 
 }

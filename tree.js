@@ -1,10 +1,9 @@
 
+
 export class Tree {
   constructor(options) {
     this.obj = options;
-
     this.tree = {
-
       size: 10,
       mass: [],
       treeWidth: 2 - 25,

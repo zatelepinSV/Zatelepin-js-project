@@ -1,5 +1,3 @@
-//import {Helper} from "./helper.js";
-//import {Spa} from "./Spa.js";
 import {AjaxStringStorage} from "./AjaxStringStorage.js";
 
 
@@ -11,24 +9,18 @@ export class LooseMenu {
     this.result = result;
     this.createLooseMenu();
     this.showLooseMenu();
-
   }
 
   createLooseMenu() {
-    /*const html = `<h1>You LOOOSE!!!</h1>
-                    <p>Your score : ${this.score}</p>
-                    <button id="save">Save</button> <button id="again" >Try again</button>`;
-    Helper.createPage('app','looseMenu', html,false);*/
     const wrapper = document.getElementById('app');
     const menu = document.createElement('div');
     menu.id = 'looseMenu';
 
-    menu.innerHTML = `<h1>You LOOOSE!!!</h1>
+    menu.innerHTML = `<h1>You LOOSE!</h1>
                     <p>Your score : ${this.score}</p>
                     <button id="save">Save</button> <button id="again" >Try again</button>`;
     wrapper.appendChild(menu);
   }
-
 
   showLooseMenu() {
     const startNewGame = document.getElementById('again');
@@ -52,20 +44,15 @@ export class LooseMenu {
         e.preventDefault();
         const formData = new FormData(formElement);
         const name = formData.get('name');
-        //this.#data[name] = this.score;
         this.#data.name = `${name}`;
-        this.#data.id = `${this.score}`;
-        //console.log(this.result)
-        console.log(this.result)
+        this.#data.score = `${this.score}`;
+        console.log(this.#data)
+        this.addDataFromForm();
         //this.result = [];
         this.store.preloadData('LOCKGET').then(() =>
-          this.store.preloadData('UPDATE',JSON.stringify(this.result)))
+          this.store.preloadData('UPDATE',JSON.stringify(this.result)));
 
-        console.log(this.#data);
-        this.result.push(this.#data)
-        console.log(this.result)
-
-        location.hash = encodeURIComponent(JSON.stringify({page: "score"}))
+        location.hash = encodeURIComponent(JSON.stringify({page: "score"}));
       });
 
     }
@@ -74,5 +61,11 @@ export class LooseMenu {
     goToScore.addEventListener('click',this.recordResult);
   }
 
+  addDataFromForm() {
+    this.result.push(this.#data);
+    this.result.sort((a,b) => a.score - b.score).reverse().
+    map((item,index) => item.rang = index+1);
+    this.result = this.result.filter(item => item.rang < 11);
+  }
 
 }

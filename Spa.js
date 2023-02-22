@@ -3,12 +3,12 @@ import {Helper} from "./helper.js";
 
 
 export class Spa {
-  #articles = null;
-  set articlesData(articles) {
-    this.#articles = articles;
+  #scores = null;
+  set scoresData(scores) {
+    this.#scores = scores;
   }
   constructor(renderHookId) {
-    this.audio = new Audio('audio/btn.mp3');
+    //this.audio = new Audio('audio/btn.mp3');
     this.hookId = renderHookId;
     this.subscribeToHashChanges();
   }
@@ -18,7 +18,7 @@ export class Spa {
   }
 
   processState() {
-    this.audio.play();
+
     let state = decodeURIComponent(location.hash.substr(1));
     if (state === '') {
       this.renderMainPage();
@@ -28,7 +28,7 @@ export class Spa {
 
     switch (state.page) {
       case 'newGame':
-        this.game = new Game(this.#articles);
+        this.game = new Game(this.#scores);
         break;
       case 'rules':
         this.renderRulesPage();
@@ -42,11 +42,6 @@ export class Spa {
       default:
         this.renderMainPage();
     }
-  }
-
-  renderLoadingPage() {
-    const appEl = document.getElementById(this.hookId);
-    appEl.innerHTML = `Loading...`;
   }
 
   renderMainPage() {
@@ -66,19 +61,29 @@ export class Spa {
 
   renderRulesPage() {
     const key = `<h1>Rules</h1>
-                 <p>some rules</p>`;
+                 <p>The strongest lumberjack in the world who accepts the challenge to cut down the biggest tree in the 
+                 world! But here's the catch, no matter how much he cuts it: the tree does not fall, but falls lower 
+                 and lower. The user controls the lumberjack with the arrows on the keyboard. The tree moves with each 
+                 blow of the ax and obstacles (branches) appear on it randomly. The user needs to control the 
+                 lumberjack from side to side to avoid collision with the branches appearing on the tree trunk. 
+                 An adrenaline scale is also provided, which will decrease and increase over time with each hit of an 
+                 ax on a tree. The user will have to cut the tree faster, because if the scale ends, the player 
+                 has lost. The more hits with an ax - the more points. I ran into a branch - I lost, the scale 
+                 ended - I lost.</p>`;
 
     Helper.createPage(this.hookId,"rules", key,true);
   }
 
   renderScorePage() {
+    const scores = this.#scores.filter(item => item.rang < 11);
     let result = `<h1>Score</h1>
-                  <ul id="result">`
-    result += this.#articles.sort((a,b) => a.id - b.id).map(item =>
-      `<li><span>
-      ${item.name} : ${item.id}</span>
-      </li>`).reverse().join('');
-    result += `</ul>`;
+                  <table> <td>Rang</td><td>Name</td><td>Score</td>`;
+    result += scores.map(item => `<tr>
+        <td>${item.rang}</td>
+        <td>${item.name}</td>
+        <td id="tableScore">${item.score}</td>
+        </tr>`).join('');
+    result+= `</table>`;
 
     Helper.createPage(this.hookId,"score", result,true);
   }

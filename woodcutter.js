@@ -13,7 +13,6 @@ export class Woodcutter {
   }
 
   init() {
-    console.log(this.wood.obj.canvas.width)
     this.wood.posX = this.wood.obj.canvas.width / 2 - 150;
     this.wood.posY = 570;
     this.createWoodcutter();

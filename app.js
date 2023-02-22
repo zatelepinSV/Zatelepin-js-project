@@ -1,5 +1,6 @@
 import {Spa} from "./Spa.js";
 import {AjaxStringStorage} from "./AjaxStringStorage.js";
+import {DOMHelper} from "./helper.js";
 
 
 class App {
@@ -7,13 +8,13 @@ class App {
   static async init() {
     const spa = new Spa('app');
     const storage = new AjaxStringStorage();
-    spa.renderLoadingPage();
+    DOMHelper.createLoader();
 
     const encData = await storage.preloadData('READ');
     if (encData.error !== undefined) {
       alert(encData.error);
     } else if (encData) {
-      spa.articlesData = JSON.parse(encData.result);
+      spa.scoresData = JSON.parse(encData.result);
       spa.processState();
     } else {
       spa.renderMainPage();
