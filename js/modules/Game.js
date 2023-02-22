@@ -1,9 +1,9 @@
-import {Board} from "./board.js";
-import {Tree} from "./tree.js";
-import {Woodcutter} from "./woodcutter.js";
-import {Strip} from "./strip.js";
-import {LooseMenu} from "./looseMenu.js";
-import {DOMHelper} from "./helper.js";
+import {Board} from "./Board.js";
+import {Tree} from "./Tree.js";
+import {Woodcutter} from "./Woodcutter.js";
+import {Strip} from "./Strip.js";
+import {LooseMenu} from "./LooseMenu.js";
+import {DOMHelper} from "./Component.js";
 
 
 

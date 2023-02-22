@@ -1,8 +1,7 @@
-//import {Game} from "./Game.js";
+
 
 export class Board {
   constructor(obj) {
-
     this.self = obj;
     this.createBoard()
   }

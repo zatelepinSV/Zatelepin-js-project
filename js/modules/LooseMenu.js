@@ -16,7 +16,7 @@ export class LooseMenu {
     const menu = document.createElement('div');
     menu.id = 'looseMenu';
 
-    menu.innerHTML = `<h1>You LOOSE!</h1>
+    menu.innerHTML = `<h1>GAME OVER!</h1>
                     <p>Your score : ${this.score}</p>
                     <button id="save">Save</button> <button id="again" >Try again</button>`;
     wrapper.appendChild(menu);
@@ -67,5 +67,4 @@ export class LooseMenu {
     map((item,index) => item.rang = index+1);
     this.result = this.result.filter(item => item.rang < 11);
   }
-
 }

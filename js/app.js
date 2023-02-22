@@ -1,6 +1,6 @@
-import {Spa} from "./Spa.js";
-import {AjaxStringStorage} from "./AjaxStringStorage.js";
-import {DOMHelper} from "./helper.js";
+import {Spa} from "./modules/Spa.js";
+import {AjaxStringStorage} from "./modules/AjaxStringStorage.js";
+import {DOMHelper} from "./modules/Component.js";
 
 
 class App {
@@ -19,10 +19,7 @@ class App {
     } else {
       spa.renderMainPage();
     }
-
   }
-
 }
-
 
 App.init().then(() => console.log('App was initialized!'));

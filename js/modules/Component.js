@@ -1,4 +1,5 @@
-export class Helper {
+
+export class SPAHelper {
   static createPage(hookId, className,text,value) {
     const appEl = document.getElementById(hookId);
     const pageWrapper = document.createElement('div');
@@ -42,7 +43,7 @@ export class SettingsMenuHelper {
       norm: null,
       hard: null,
     }
-  }
 
+  }
 
 }

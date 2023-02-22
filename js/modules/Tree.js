@@ -1,4 +1,4 @@
-
+import {SettingsMenuHelper} from "./Component.js";
 
 export class Tree {
   constructor(options) {
@@ -17,7 +17,6 @@ export class Tree {
     }
     this.createTre();
   }
-
 
   updateMass() {
     this.tree.mass.forEach((mass) => {
@@ -44,7 +43,6 @@ export class Tree {
     }
   }
 
-
   func(t) {
     return {
       width: 50,
@@ -53,7 +51,6 @@ export class Tree {
       y: t,
       randBranch: this.getRand()
     }
-
   }
 
   getRand() {
@@ -77,12 +74,13 @@ export class Tree {
 
 
   renderMass(music) {
-    music.play();
+    console.log(SettingsMenuHelper.object.audio)
+    if (SettingsMenuHelper.object.audio) {
+      music.play();
+    }
     this.tree.mass.pop();
     this.updateMass();
     this.tree.mass.unshift(this.func(0));
     this.createTree();
   }
-
-
 }

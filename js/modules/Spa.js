@@ -1,5 +1,6 @@
-import {Game} from "./game.js";
-import {Helper} from "./helper.js";
+import {Game} from "./Game.js";
+import {SPAHelper} from "./Component.js";
+import {SettingsMenuHelper} from "./Component.js";
 
 
 export class Spa {
@@ -8,7 +9,6 @@ export class Spa {
     this.#scores = scores;
   }
   constructor(renderHookId) {
-    //this.audio = new Audio('audio/btn.mp3');
     this.hookId = renderHookId;
     this.subscribeToHashChanges();
   }
@@ -18,7 +18,6 @@ export class Spa {
   }
 
   processState() {
-
     let state = decodeURIComponent(location.hash.substr(1));
     if (state === '') {
       this.renderMainPage();
@@ -51,12 +50,13 @@ export class Spa {
                         <li id="newGame">New Game</li>
                         <li id="rules">Rules</li>
                         <li id="score">Score</li>
-                        <li id="settings">settings</li>
+                        <li id="settings">Settings</li>
                     </ul>`;
-    Helper.createPage(this.hookId,"rules", html,false);
+    SPAHelper.createPage(this.hookId,"mainPage", html,false);
     Array.from(document.getElementsByTagName('li')).map(item => {
       item.addEventListener("click", () => this.goToPage());
     });
+    this.turnOnTheSound();
   }
 
   renderRulesPage() {
@@ -71,7 +71,7 @@ export class Spa {
                  has lost. The more hits with an ax - the more points. I ran into a branch - I lost, the scale 
                  ended - I lost.</p>`;
 
-    Helper.createPage(this.hookId,"rules", key,true);
+    SPAHelper.createPage(this.hookId,"rules", key,true);
   }
 
   renderScorePage() {
@@ -85,18 +85,18 @@ export class Spa {
         </tr>`).join('');
     result+= `</table>`;
 
-    Helper.createPage(this.hookId,"score", result,true);
+    SPAHelper.createPage(this.hookId,"score", result,true);
   }
 
   renderSettingsPage() {
     const key = `<h1>Settings</h1>
-                 <p>some settings</p>
                  <div>
-                 <input type="checkbox" id="sound" name="sound" checked>
                  <label for="sound">Sound</label>
+                 <input type="checkbox" id="sound" name="sound">
                  </div>`;
 
-    Helper.createPage(this.hookId,"rules", key,true);
+    SPAHelper.createPage(this.hookId,"rules", key,true);
+    this.audioSettings();
   }
 
   goToPage() {
@@ -108,4 +108,26 @@ export class Spa {
     location.hash = encodeURIComponent(JSON.stringify(state));
   }
 
+  turnOnTheSound() {
+    if (SettingsMenuHelper.object.audio === null) {
+      SettingsMenuHelper.object.audio = true;
+    }
+  }
+
+  audioSettings() {
+    const soundCheckbox = document.getElementById("sound");
+    if (SettingsMenuHelper.object.audio) {
+      soundCheckbox.checked = true;
+    }
+
+    soundCheckbox.addEventListener("change", () => {
+      if (soundCheckbox.checked) {
+        console.log('checked');
+        SettingsMenuHelper.object.audio = true;
+      } else {
+        console.log('unchecked')
+        SettingsMenuHelper.object.audio = false;
+      }
+    })
+  }
 }
