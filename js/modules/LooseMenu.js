@@ -3,12 +3,18 @@ import {AjaxStringStorage} from "./AjaxStringStorage.js";
 
 export class LooseMenu {
   #data = {}
-  constructor(score,result) {
+  constructor(score,result, audio) {
     this.store = new AjaxStringStorage();
     this.score = score;
     this.result = result;
+    this.audio = audio;
+    this.audioStop();
     this.createLooseMenu();
     this.showLooseMenu();
+  }
+
+  audioStop() {
+    this.audio.pause();
   }
 
   createLooseMenu() {

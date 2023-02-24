@@ -5,12 +5,16 @@ import {SettingsMenuHelper} from "./Component.js";
 
 export class Spa {
   #scores = null;
+
   set scoresData(scores) {
     this.#scores = scores;
   }
+
   constructor(renderHookId) {
+    this.difficultyLevel = null;
     this.hookId = renderHookId;
     this.subscribeToHashChanges();
+    this.audio = new Audio('audio/start.mp3');
   }
 
   subscribeToHashChanges() {
@@ -19,15 +23,15 @@ export class Spa {
 
   processState() {
     let state = decodeURIComponent(location.hash.substr(1));
-    if (state === '') {
-      this.renderMainPage();
-    } else {
+    if (state !== '') {
       state = JSON.parse(state);
     }
 
     switch (state.page) {
       case 'newGame':
-        this.game = new Game(this.#scores);
+        this.audio.currentTime = 0;
+        this.audio.play();
+        this.game = new Game(this.#scores, this.audio);
         break;
       case 'rules':
         this.renderRulesPage();
@@ -52,11 +56,13 @@ export class Spa {
                         <li id="score">Score</li>
                         <li id="settings">Settings</li>
                     </ul>`;
-    SPAHelper.createPage(this.hookId,"mainPage", html,false);
+    SPAHelper.createPage(this.hookId, "mainPage", html, false);
     Array.from(document.getElementsByTagName('li')).map(item => {
       item.addEventListener("click", () => this.goToPage());
     });
-    this.turnOnTheSound();
+    //this.checkObj(SettingsMenuHelper.object.complication);
+    console.log('audio'+ ' ' + SettingsMenuHelper.object.audio);
+    console.log(SettingsMenuHelper.object.complication)
   }
 
   renderRulesPage() {
@@ -71,7 +77,7 @@ export class Spa {
                  has lost. The more hits with an ax - the more points. I ran into a branch - I lost, the scale 
                  ended - I lost.</p>`;
 
-    SPAHelper.createPage(this.hookId,"rules", key,true);
+    SPAHelper.createPage(this.hookId, "rules", key, true);
   }
 
   renderScorePage() {
@@ -83,9 +89,9 @@ export class Spa {
         <td>${item.name}</td>
         <td id="tableScore">${item.score}</td>
         </tr>`).join('');
-    result+= `</table>`;
+    result += `</table>`;
 
-    SPAHelper.createPage(this.hookId,"score", result,true);
+    SPAHelper.createPage(this.hookId, "score", result, true);
   }
 
   renderSettingsPage() {
@@ -93,10 +99,19 @@ export class Spa {
                  <div>
                  <label for="sound">Sound</label>
                  <input type="checkbox" id="sound" name="sound">
-                 </div>`;
+                 </div>
+                 <!--<form id="rrr">-->
+                 <input type="radio" name="difficulty" value="easy">
+                 <label for="easy">Easy</label>
+                 <input type="radio" name="difficulty" value="norm">
+                 <label for="norm">Norm</label>
+                 <input type="radio" name="difficulty" value="hard">
+                 <label for="hard">Hard</label>
+                 <!--</form>-->`;
 
-    SPAHelper.createPage(this.hookId,"rules", key,true);
+    SPAHelper.createPage(this.hookId, "rules", key, true);
     this.audioSettings();
+    this.checkComplication(SettingsMenuHelper.object.complication);
   }
 
   goToPage() {
@@ -108,26 +123,40 @@ export class Spa {
     location.hash = encodeURIComponent(JSON.stringify(state));
   }
 
-  turnOnTheSound() {
-    if (SettingsMenuHelper.object.audio === null) {
-      SettingsMenuHelper.object.audio = true;
+  audioSettings() {
+    const soundCheckbox = document.getElementById("sound");
+    SettingsMenuHelper.object.audio ? soundCheckbox.checked = true : soundCheckbox.checked = false;
+    soundCheckbox.addEventListener("change", () => {
+      soundCheckbox.checked ? SettingsMenuHelper.object.audio = true : SettingsMenuHelper.object.audio = false;
+    })
+  }
+
+  checkComplication(complicationObject) {
+    this.checkObj(complicationObject);
+
+    document.querySelectorAll('input[type=radio]').forEach(item => {
+      if (item.value === this.difficultyLevel ) {
+        item.checked = 'checked';
+      }
+      item.addEventListener('change', () => {
+        this.setCheck(complicationObject, item.value);
+        console.log(complicationObject)
+      })
+    });
+
+  }
+
+  checkObj(list) {
+    for (let item of Object.keys(list)) {
+      if (list[item]) {
+        this.difficultyLevel = item;
+      }
     }
   }
 
-  audioSettings() {
-    const soundCheckbox = document.getElementById("sound");
-    if (SettingsMenuHelper.object.audio) {
-      soundCheckbox.checked = true;
+  setCheck(list, value) {
+    for (let item of Object.keys(list)) {
+      item === value ? list[item] = true : list[item] = false;
     }
-
-    soundCheckbox.addEventListener("change", () => {
-      if (soundCheckbox.checked) {
-        console.log('checked');
-        SettingsMenuHelper.object.audio = true;
-      } else {
-        console.log('unchecked')
-        SettingsMenuHelper.object.audio = false;
-      }
-    })
   }
 }

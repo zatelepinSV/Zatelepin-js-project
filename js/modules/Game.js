@@ -8,8 +8,9 @@ import {DOMHelper} from "./Component.js";
 
 
 export class Game {
-  constructor(score) {
+  constructor(score, audio) {
     this.ressult = score;
+    this.audio = audio;
     this.mp3 = new Audio('audio/hit.mp3');
     this.game = {
       speed: 1000,
@@ -130,7 +131,7 @@ export class Game {
   loose() {
     if (this.checkTime() === 0 || this.checkBranch()) {
       this.stop();
-      this.looseMenu = new LooseMenu(this.game.score,this.ressult);
+      this.looseMenu = new LooseMenu(this.game.score,this.ressult, this.audio);
     }
   }
 
