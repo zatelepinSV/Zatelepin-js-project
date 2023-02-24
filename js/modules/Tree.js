@@ -74,7 +74,6 @@ export class Tree {
 
 
   renderMass(music) {
-    console.log(SettingsMenuHelper.object.audio)
     if (SettingsMenuHelper.object.audio) {
       music.play();
     }

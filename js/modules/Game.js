@@ -3,14 +3,15 @@ import {Tree} from "./Tree.js";
 import {Woodcutter} from "./Woodcutter.js";
 import {Strip} from "./Strip.js";
 import {LooseMenu} from "./LooseMenu.js";
-import {DOMHelper} from "./Component.js";
+import {DOMHelper, SettingsMenuHelper} from "./Component.js";
 
 
 
 export class Game {
-  constructor(score, audio) {
+  constructor(score, diff) {
     this.ressult = score;
-    this.audio = audio;
+    this.difficultyLevel = diff;
+    this.audio = new Audio('audio/start.mp3');
     this.mp3 = new Audio('audio/hit.mp3');
     this.game = {
       speed: 1000,
@@ -42,6 +43,7 @@ export class Game {
       },
     }
     this.start();
+    this.playAudio();
   }
 
   start() {
@@ -98,7 +100,7 @@ export class Game {
   }
 
   create() {
-    this.board = new Board(this.game);
+    this.board = new Board(this.game, this.difficultyLevel);
     this.tree = new Tree(this.game);
     this.woodcutter = new Woodcutter(this.game);
     this.strip = new Strip(this.game);
@@ -152,5 +154,12 @@ export class Game {
     document.removeEventListener('keydown',this.dd)
     clearInterval(this.gameInterval);
     clearInterval(this.strip.inter);
+  }
+
+  playAudio() {
+    if (SettingsMenuHelper.object.audio) {
+      this.audio.currentTime = 0;
+      this.audio.play();
+    }
   }
 }

@@ -14,7 +14,6 @@ export class Spa {
     this.difficultyLevel = null;
     this.hookId = renderHookId;
     this.subscribeToHashChanges();
-    this.audio = new Audio('audio/start.mp3');
   }
 
   subscribeToHashChanges() {
@@ -29,9 +28,7 @@ export class Spa {
 
     switch (state.page) {
       case 'newGame':
-        this.audio.currentTime = 0;
-        this.audio.play();
-        this.game = new Game(this.#scores, this.audio);
+        this.game = new Game(this.#scores, this.difficultyLevel);
         break;
       case 'rules':
         this.renderRulesPage();
@@ -60,9 +57,6 @@ export class Spa {
     Array.from(document.getElementsByTagName('li')).map(item => {
       item.addEventListener("click", () => this.goToPage());
     });
-    //this.checkObj(SettingsMenuHelper.object.complication);
-    console.log('audio'+ ' ' + SettingsMenuHelper.object.audio);
-    console.log(SettingsMenuHelper.object.complication)
   }
 
   renderRulesPage() {
@@ -100,14 +94,15 @@ export class Spa {
                  <label for="sound">Sound</label>
                  <input type="checkbox" id="sound" name="sound">
                  </div>
-                 <!--<form id="rrr">-->
+                 <div class="difficulty">
+                 <p><b>Choose difficulty level:</b></p>
                  <input type="radio" name="difficulty" value="easy">
                  <label for="easy">Easy</label>
                  <input type="radio" name="difficulty" value="norm">
                  <label for="norm">Norm</label>
                  <input type="radio" name="difficulty" value="hard">
                  <label for="hard">Hard</label>
-                 <!--</form>-->`;
+                 </div>`;
 
     SPAHelper.createPage(this.hookId, "rules", key, true);
     this.audioSettings();
@@ -132,21 +127,22 @@ export class Spa {
   }
 
   checkComplication(complicationObject) {
-    this.checkObj(complicationObject);
+    this.checkAndSetLevel(complicationObject);
 
     document.querySelectorAll('input[type=radio]').forEach(item => {
       if (item.value === this.difficultyLevel ) {
         item.checked = 'checked';
       }
       item.addEventListener('change', () => {
-        this.setCheck(complicationObject, item.value);
-        console.log(complicationObject)
+
+        this.setNewLevel(complicationObject, item.value);
+        this.checkAndSetLevel(complicationObject)
       })
     });
 
   }
 
-  checkObj(list) {
+  checkAndSetLevel(list) {
     for (let item of Object.keys(list)) {
       if (list[item]) {
         this.difficultyLevel = item;
@@ -154,9 +150,10 @@ export class Spa {
     }
   }
 
-  setCheck(list, value) {
+  setNewLevel(list, value) {
     for (let item of Object.keys(list)) {
       item === value ? list[item] = true : list[item] = false;
     }
   }
+
 }

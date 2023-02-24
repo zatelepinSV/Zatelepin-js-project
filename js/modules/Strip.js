@@ -1,12 +1,15 @@
+//import {Game} from "./Game.js";
+import {SettingsMenuHelper} from "./Component.js";
 
 export class Strip {
   constructor() {
     this.object = {
       time: 100,
       timer: 100,
-      upTime:2,
+      upTime: null,
     };
     this.createProgress();
+    this.difficultyLevel();
   }
 
   createProgress() {
@@ -39,5 +42,28 @@ export class Strip {
       }
     }
     document.addEventListener('keydown', this.lisAddTime);
+  }
+
+  difficultyLevel() {
+    let difficulty = null;
+
+    for (let item of Object.keys(SettingsMenuHelper.object.complication)) {
+      if (SettingsMenuHelper.object.complication[item]) {
+        difficulty = item;
+      }
+    }
+
+
+    switch (difficulty) {
+      case 'easy':
+        this.object.upTime = 2;
+        break;
+      case 'norm':
+        this.object.upTime = 1;
+        break;
+      case 'hard':
+        this.object.upTime = 0.5;
+        break;
+    }
   }
 }

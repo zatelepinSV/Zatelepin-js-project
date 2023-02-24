@@ -1,14 +1,16 @@
 
 
 export class Board {
-  constructor(obj) {
+  constructor(obj, diffLvl) {
     this.self = obj;
+    this.difficultyLevel = diffLvl;
     this.createBoard()
   }
 
   createBoard() {
     this.createBackground();
     this.createScore();
+    this.createDifficulty();
   }
 
   createBackground() {
@@ -19,6 +21,15 @@ export class Board {
     this.self.ctx.fillStyle = 'red';
     this.self.ctx.font = 'italic bold 28px Courier';
     this.self.ctx.fillText('Score: ' + this.self.score, 10, 30);
+  }
+
+  createDifficulty() {
+    if (!this.difficultyLevel) {
+      this.difficultyLevel = 'Easy';
+    }
+    this.self.ctx.fillStyle = '#8b00ff';
+    this.self.ctx.font = 'italic bold 28px Courier';
+    this.self.ctx.fillText(this.difficultyLevel, 10, 60);
   }
 
 }

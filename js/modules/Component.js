@@ -42,7 +42,7 @@ export class SettingsMenuHelper {
       easy: true,
       norm: null,
       hard: null,
-    },
+    }
   }
 
 
