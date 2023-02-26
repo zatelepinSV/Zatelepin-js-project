@@ -123,7 +123,8 @@ export class Game {
   }
 
   render() {
-    this.game.score += 10;
+    this.checkLevel();
+    //this.game.score += 10;
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     this.board.createBoard(this.game)
     this.tree.renderMass(this.mp3);
@@ -149,6 +150,23 @@ export class Game {
     }
   }
 
+  checkLevel() {
+
+    switch (this.difficultyLevel) {
+      case 'easy':
+        this.game.score += 10;
+        break;
+      case 'norm':
+        this.game.score += 20;
+        break;
+      case 'hard':
+        this.game.score += 30;
+        break;
+      default :
+        this.game.score += 10;
+    }
+  }
+
   stop() {
     document.removeEventListener('keydown',this.strip.lisAddTime)
     document.removeEventListener('keydown',this.dd)
@@ -157,7 +175,7 @@ export class Game {
   }
 
   playAudio() {
-    if (SettingsMenuHelper.object.audio) {
+    if (SettingsMenuHelper.object.audio.music) {
       this.audio.currentTime = 0;
       this.audio.play();
     }

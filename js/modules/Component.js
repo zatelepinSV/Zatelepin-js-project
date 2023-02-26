@@ -37,10 +37,13 @@ export class DOMHelper {
 
 export class SettingsMenuHelper {
   static object = {
-    audio: true,
+    audio: {
+      music: true,
+      axe: true,
+    },
     complication: {
       easy: true,
-      norm: null,
+      normal: null,
       hard: null,
     }
   }

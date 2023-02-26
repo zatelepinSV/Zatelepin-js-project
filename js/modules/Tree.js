@@ -74,7 +74,7 @@ export class Tree {
 
 
   renderMass(music) {
-    if (SettingsMenuHelper.object.audio) {
+    if (SettingsMenuHelper.object.audio.axe) {
       music.play();
     }
     this.tree.mass.pop();
