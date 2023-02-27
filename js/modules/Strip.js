@@ -1,5 +1,4 @@
-//import {Game} from "./Game.js";
-import {SettingsMenuHelper} from "./Component.js";
+import { SettingsMenuHelper } from "./Component.js";
 
 export class Strip {
   constructor() {
@@ -46,13 +45,11 @@ export class Strip {
 
   difficultyLevel() {
     let difficulty = null;
-
     for (let item of Object.keys(SettingsMenuHelper.object.complication)) {
       if (SettingsMenuHelper.object.complication[item]) {
         difficulty = item;
       }
     }
-
 
     switch (difficulty) {
       case 'easy':

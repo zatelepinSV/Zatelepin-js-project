@@ -1,17 +1,13 @@
-import {Game} from "./Game.js";
-import {SPAHelper} from "./Component.js";
-import {SettingsMenuHelper} from "./Component.js";
-
+import { Game } from "./Game.js";
+import { SPAHelper } from "./Component.js";
+import { SettingsMenuHelper } from "./Component.js";
 
 export class Spa {
   #scores = null;
-
   set scoresData(scores) {
     this.#scores = scores;
   }
-
   constructor(renderHookId) {
-    //this.www = SettingsMenuHelper.object.audio.music
     this.difficultyLevel = null;
     this.hookId = renderHookId;
     this.subscribeToHashChanges();
@@ -46,7 +42,6 @@ export class Spa {
   }
 
   renderMainPage() {
-
     const html = `<h1>The Woodcutter</h1>
                     <ul>
                         <li id="newGame">New Game</li>
@@ -62,9 +57,10 @@ export class Spa {
 
   renderRulesPage() {
     const key = `<h1>Rules</h1>
-                 <p>The strongest lumberjack in the world who accepts the challenge to cut down the biggest tree in the 
+                 <p id="rulesText">The strongest lumberjack in the world who accepts the challenge to cut down the 
+                 biggest tree in the 
                  world! But here's the catch, no matter how much he cuts it: the tree does not fall, but falls lower 
-                 and lower. The user controls the lumberjack with the arrows on the keyboard. The tree moves with each 
+                 and lower. The user controls the lumberjack with the <strong>arrows on the keyboard</strong>. The tree moves with each 
                  blow of the ax and obstacles (branches) appear on it randomly. The user needs to control the 
                  lumberjack from side to side to avoid collision with the branches appearing on the tree trunk. 
                  An adrenaline scale is also provided, which will decrease and increase over time with each hit of an 
@@ -135,18 +131,16 @@ export class Spa {
 
   checkComplication(complicationObject) {
     this.checkAndSetLevel(complicationObject);
-
     document.querySelectorAll('input[type=radio]').forEach(item => {
+
       if (item.value === this.difficultyLevel) {
         item.checked = 'checked';
       }
       item.addEventListener('change', () => {
-
         this.setNewLevel(complicationObject, item.value);
-        this.checkAndSetLevel(complicationObject)
+        this.checkAndSetLevel(complicationObject);
       })
     });
-
   }
 
   checkAndSetLevel(list) {

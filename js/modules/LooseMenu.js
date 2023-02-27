@@ -1,5 +1,4 @@
-import {AjaxStringStorage} from "./AjaxStringStorage.js";
-
+import { AjaxStringStorage } from "./AjaxStringStorage.js";
 
 export class LooseMenu {
   #data = {}
@@ -21,10 +20,9 @@ export class LooseMenu {
     const wrapper = document.getElementById('app');
     const menu = document.createElement('div');
     menu.id = 'looseMenu';
-
     menu.innerHTML = `<h1>GAME OVER!</h1>
                     <p>Your score : ${this.score}</p>
-                    <button id="save">Save</button> <button id="again" >Try again</button>`;
+                    <button id="save">Save</button> <button id="again" >Go to Main</button>`;
     wrapper.appendChild(menu);
   }
 
@@ -52,17 +50,12 @@ export class LooseMenu {
         const name = formData.get('name');
         this.#data.name = `${name}`;
         this.#data.score = `${this.score}`;
-        console.log(this.#data)
         this.addDataFromForm();
-        //this.result = [];
         this.store.preloadData('LOCKGET').then(() =>
           this.store.preloadData('UPDATE',JSON.stringify(this.result)));
-
         location.hash = encodeURIComponent(JSON.stringify({page: "score"}));
       });
-
     }
-
     startNewGame.addEventListener("click", this.startAgain);
     goToScore.addEventListener('click',this.recordResult);
   }

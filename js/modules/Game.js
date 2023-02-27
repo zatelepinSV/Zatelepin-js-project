@@ -1,9 +1,9 @@
-import {Board} from "./Board.js";
-import {Tree} from "./Tree.js";
-import {Woodcutter} from "./Woodcutter.js";
-import {Strip} from "./Strip.js";
-import {LooseMenu} from "./LooseMenu.js";
-import {DOMHelper, SettingsMenuHelper} from "./Component.js";
+import { Board } from "./Board.js";
+import { Tree } from "./Tree.js";
+import { Woodcutter } from "./Woodcutter.js";
+import { Strip } from "./Strip.js";
+import { LooseMenu } from "./LooseMenu.js";
+import { DOMHelper, SettingsMenuHelper } from "./Component.js";
 
 
 
@@ -72,6 +72,7 @@ export class Game {
     this.game.canvas.height = this.game.height;
   }
 
+
   preload(callback) {
     let loaded = 0;
     const required = Object.keys(this.game.sprites).length;
@@ -105,7 +106,7 @@ export class Game {
     this.woodcutter = new Woodcutter(this.game);
     this.strip = new Strip(this.game);
 
-    this.dd = () => {
+    this.renderWoodcutter = () => {
       if (event.code === 'ArrowLeft') {
         this.woodcutter.positionWoodLeft();
         this.render();
@@ -115,7 +116,7 @@ export class Game {
         this.render();
       }
     }
-    document.addEventListener('keydown', this.dd)
+    document.addEventListener('keydown', this.renderWoodcutter)
   }
 
   update() {
@@ -124,7 +125,6 @@ export class Game {
 
   render() {
     this.checkLevel();
-    //this.game.score += 10;
     this.game.ctx.clearRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     this.board.createBoard(this.game)
     this.tree.renderMass(this.mp3);
@@ -156,7 +156,7 @@ export class Game {
       case 'easy':
         this.game.score += 10;
         break;
-      case 'norm':
+      case 'normal':
         this.game.score += 20;
         break;
       case 'hard':
@@ -168,8 +168,8 @@ export class Game {
   }
 
   stop() {
-    document.removeEventListener('keydown',this.strip.lisAddTime)
-    document.removeEventListener('keydown',this.dd)
+    document.removeEventListener('keydown',this.strip.lisAddTime);
+    document.removeEventListener('keydown',this.renderWoodcutter);
     clearInterval(this.gameInterval);
     clearInterval(this.strip.inter);
   }

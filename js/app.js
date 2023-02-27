@@ -1,7 +1,6 @@
-import {Spa} from "./modules/Spa.js";
-import {AjaxStringStorage} from "./modules/AjaxStringStorage.js";
-import {DOMHelper} from "./modules/Component.js";
-
+import { Spa } from "./modules/Spa.js";
+import { AjaxStringStorage } from "./modules/AjaxStringStorage.js";
+import { DOMHelper } from "./modules/Component.js";
 
 class App {
 

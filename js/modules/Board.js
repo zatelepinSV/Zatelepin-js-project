@@ -31,5 +31,4 @@ export class Board {
     this.self.ctx.font = 'italic bold 28px Courier';
     this.self.ctx.fillText(this.difficultyLevel, 10, 60);
   }
-
 }

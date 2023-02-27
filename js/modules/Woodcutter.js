@@ -1,5 +1,4 @@
 
-
 export class Woodcutter {
   constructor(obj) {
     this.wood = {
@@ -8,7 +7,6 @@ export class Woodcutter {
       posY: null,
       some: null,
     }
-
     this.init();
   }
 
@@ -31,5 +29,4 @@ export class Woodcutter {
     this.wood.posX = this.wood.obj.canvas.width / 2 + 50;
     this.wood.some = false;
   }
-
 }

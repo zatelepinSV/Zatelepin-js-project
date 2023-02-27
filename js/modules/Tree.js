@@ -1,4 +1,4 @@
-import {SettingsMenuHelper} from "./Component.js";
+import { SettingsMenuHelper } from "./Component.js";
 
 export class Tree {
   constructor(options) {
@@ -71,7 +71,6 @@ export class Tree {
       this.obj.ctx.closePath();
     })
   }
-
 
   renderMass(music) {
     if (SettingsMenuHelper.object.audio.axe) {

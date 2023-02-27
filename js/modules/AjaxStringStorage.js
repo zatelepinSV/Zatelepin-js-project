@@ -1,5 +1,4 @@
 
-
 export class AjaxStringStorage {
   static sendHttpRequest(method, url, data) {
     return fetch(url, {
