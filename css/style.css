@@ -132,6 +132,17 @@ button {
     text-align: justify;
 }
 
+#exit {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bolder;
+    color: red;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
     body {
         overflow: hidden;
@@ -141,7 +152,4 @@ button {
         width: 100%;
         height: 100%;
     }
-
-
-
 }

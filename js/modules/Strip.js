@@ -17,7 +17,12 @@ export class Strip {
     progress.id = 'progress';
     progress.max = 100;
     progress.value = 100;
-    wrapper.appendChild(progress)
+    wrapper.appendChild(progress);
+
+    const exitBtn = document.createElement('div');
+    exitBtn.id = 'exit'
+    exitBtn.innerText = 'Exit';
+    wrapper.appendChild(exitBtn);
     document.addEventListener('keydown', () => {
       if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
         this.startProgress(this.object.timer);

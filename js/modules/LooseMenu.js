@@ -31,7 +31,7 @@ export class LooseMenu {
     const goToScore = document.getElementById('save');
 
     this.startAgain = () => {
-      location.hash = encodeURIComponent('')
+      location.hash = encodeURIComponent('');
     }
 
     this.recordResult = () => {

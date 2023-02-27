@@ -5,8 +5,6 @@ import { Strip } from "./Strip.js";
 import { LooseMenu } from "./LooseMenu.js";
 import { DOMHelper, SettingsMenuHelper } from "./Component.js";
 
-
-
 export class Game {
   constructor(score, diff) {
     this.ressult = score;
@@ -59,7 +57,7 @@ export class Game {
     const appEl = document.getElementById('app');
     const canvas = document.createElement('canvas');
     canvas.id = 'canva';
-    appEl.replaceChildren(canvas)
+    appEl.replaceChildren(canvas);
     this.game.canvas = document.getElementById('canva');
     this.game.ctx = this.game.canvas.getContext('2d');
     this.initDim();
@@ -116,7 +114,13 @@ export class Game {
         this.render();
       }
     }
-    document.addEventListener('keydown', this.renderWoodcutter)
+    document.addEventListener('keydown', this.renderWoodcutter);
+    const exit = document.getElementById('exit');
+    exit.addEventListener('click', () => {
+      this.audio.pause();
+      this.stop();
+      location.hash = encodeURIComponent('');
+    })
   }
 
   update() {

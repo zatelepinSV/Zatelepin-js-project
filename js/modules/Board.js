@@ -1,5 +1,4 @@
 
-
 export class Board {
   constructor(obj, diffLvl) {
     this.self = obj;
